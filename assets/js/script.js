@@ -30,6 +30,10 @@ var moleArrofObj = [
   {
     moleArr: ["./assets/img/goofy_mole.png", "./assets/img/geeky_mole.jpg", "./assets/img/anime_mole.png", "./assets/img/worried_mole.png"],
     matchMeMoleId: 3
+  },
+  {
+    moleArr: ["./assets/img/goofy_mole.png", "./assets/img/geeky_mole.jpg", "./assets/img/anime_mole.png", "./assets/img/worried_mole.png"],
+    matchMeMoleId: 1
   }
 ]
 
@@ -84,7 +88,6 @@ function setMole(indexVal) {
 
 
 function tickUp(){
-  console.log(`tick ${moleArrofObjIndex}`)
   time++;
   timerDivEl.children[0].textContent = "Timer: " + time;
 
@@ -127,8 +130,9 @@ function saveScoreAndMoveUser() {
   
   var name = saveInputEl.value.trim();
 
-  if (name !== "") {
-    var localStorageHighScoresForMatches = JSON.parse(window.localStorage.getItem("localStorageHighScoresForMatches")) || [];
+  if (name) {
+    var localStorageHighScoresForMatches = 
+      JSON.parse(window.localStorage.getItem("localStorageHighScoresForMatches")) || [];
 
     var newEntry = {
       name: name,
@@ -136,7 +140,8 @@ function saveScoreAndMoveUser() {
     }
 
     localStorageHighScoresForMatches.push(newEntry);
-    window.localStorage.setItem("localStorageHighScoresForMatches", JSON.stringify(localStorageHighScoresForMatches))
+    window.localStorage
+      .setItem("localStorageHighScoresForMatches", JSON.stringify(localStorageHighScoresForMatches))
 
     window.location.href = "highscores.html";
   }
