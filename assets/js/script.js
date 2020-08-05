@@ -22,20 +22,38 @@ var moleArrofObj = [
     matchMeMoleId: 0
   },
   {
-    moleArr: ["./assets/img/goofy_mole.png", "./assets/img/geeky_mole.png", "./assets/img/anime_mole.png", "./assets/img/worried_mole.png"],
+    moleArr: ["./assets/img/goofy_mole.png", "./assets/img/geeky_mole.jpg", "./assets/img/anime_mole.png", "./assets/img/worried_mole.png"],
     matchMeMoleId: 1
   },
   {
-    moleArr: ["./assets/img/goofy_mole.png", "./assets/img/geeky_mole.png", "./assets/img/anime_mole.png", "./assets/img/worried_mole.png"],
+    moleArr: ["./assets/img/goofy_mole.png", "./assets/img/geeky_mole.jpg", "./assets/img/anime_mole.png", "./assets/img/worried_mole.png"],
     matchMeMoleId: 2
   },
   {
-    moleArr: ["./assets/img/goofy_mole.png", "./assets/img/geeky_mole.png", "./assets/img/anime_mole.png", "./assets/img/worried_mole.png"],
+    moleArr: ["./assets/img/goofy_mole.png", "./assets/img/geeky_mole.jpg", "./assets/img/anime_mole.png", "./assets/img/worried_mole.png"],
     matchMeMoleId: 3
   }
 ]
 
+// Begin
+beginButtonEl.addEventListener("click", begin)
+
+function begin(){
+  beginButtonEl.setAttribute("style", "display: none !important");
+  firstMoleImgEl.setAttribute("style", "display: none !important");
+  timerDivEl.setAttribute("style", "display: block !important");
+  scoreDivEl.setAttribute("style", "display: block !important");
+  containerDivEl.setAttribute("style", "display: block !important");
+
+  timerInterval = setInterval(tickUp, 1000);
+  displayMoles();
+}
+
 function displayMoles() {
+  if(moleArrofObjIndex !== 0){
+    document.getElementById("match-me-mole").children[1].remove();
+  }
+
   var currrentMoleLayout = moleArrofObj[moleArrofObjIndex];
 
   var mainImg = document.createElement("img");
@@ -50,7 +68,6 @@ function displayMoles() {
     setMole(i)
   }
 
-  // currrentMoleLayout.matchMeMoleId
 }
 
 function setMole(indexVal) {
@@ -65,18 +82,6 @@ function setMole(indexVal) {
   document.getElementById(indexVal).appendChild(newMoleImg);
 }
 
-beginButtonEl.addEventListener("click", begin)
-
-function begin(){
-  beginButtonEl.setAttribute("style", "display: none !important");
-  firstMoleImgEl.setAttribute("style", "display: none !important");
-  timerDivEl.setAttribute("style", "display: block !important");
-  scoreDivEl.setAttribute("style", "display: block !important");
-  containerDivEl.setAttribute("style", "display: block !important");
-
-  timerInterval = setInterval(tickUp, 1000);
-  displayMoles();
-}
 
 function tickUp(){
   time++;
@@ -87,42 +92,19 @@ function tickUp(){
   }
 }
 
-// function destroyOldMoleAndCreateNewMole() {
-//   if (moleLocationId || moleLocationId === 0){
-//     document.getElementById(moleLocationId).children[1].remove();
-//   }
-//   var newMoleImg = document.createElement("img");
-//   newMoleImg.classList.add("mole");
-//   newMoleImg.classList.add("h-50");
-//   newMoleImg.setAttribute("alt", "mole");
-//   newMoleImg.setAttribute("src", "./assets/img/goofy_mole.png")
-
-//   newMoleImg.addEventListener("click", countWhack)
-
-//   moleLocationId = randomLocationGenerator();
-//   document.getElementById(moleLocationId).appendChild(newMoleImg);
-// }
 
 function countMatch() {
   event.stopPropagation();
-  console.log(event.target.parentElement.id);
-  console.log(moleArrofObj[moleArrofObjIndex].matchMeMoleId)
-  if(event.target.parentElement.id === moleArrofObj[moleArrofObjIndex].matchMeMoleId) {
-    console.log("match")
+  if(parseInt(event.target.parentElement.id) === moleArrofObj[moleArrofObjIndex].matchMeMoleId) {
+    numberOfWhacks++
+    scoreDivEl.children[0].textContent = "Score: " + numberOfWhacks;
   }
 
-  numberOfWhacks++
-  scoreDivEl.children[0].textContent = "Score: " + numberOfWhacks;
-}
-
-
-function randomLocationGenerator() {
-  var randomLocation = Math.floor(Math.random()*9);
-  if(randomLocation !== moleLocationId){
-    return randomLocation
-  }else{
-    return randomLocationGenerator()
+  moleArrofObjIndex++
+  if(moleArrofObjIndex === moleArrofObj.length){
+    return end()
   }
+  displayMoles()
 }
 
 
@@ -159,20 +141,3 @@ function saveScoreAndMoveUser() {
   }
 
 }
-
-
-
-
-// Not Ready
-
-// function setMoleTimeout() {
-//   moleTimeout = setTimeout(destroyOldMoleAndCreateNewMole, 2000);
-// }
-
-// if(moleTimeout){
-  //   console.log("moleTimeout")
-  //   clearTimeout(moleTimeout)
-  // }else{
-  //   console.log("moleTimeout2")
-  // }
-  // moleTimeout = setTimeout(destroyOldMoleAndCreateNewMole, 2000);
