@@ -12,8 +12,6 @@ var timerInterval;
 var time = 0;
 var timeCap = 15;
 var numberOfWhacks = 0;
-var moleLocationId;
-var moleTimeout;
 var moleArrofObjIndex = 0;
 
 var moleArrofObj = [
