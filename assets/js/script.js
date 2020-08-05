@@ -37,14 +37,16 @@ var moleArrofObj = [
 beginButtonEl.addEventListener("click", begin)
 
 function begin(){
-  beginButtonEl.setAttribute("style", "display: none !important");
-  firstMoleImgEl.setAttribute("style", "display: none !important");
-  timerDivEl.setAttribute("style", "display: block !important");
-  scoreDivEl.setAttribute("style", "display: block !important");
-  containerDivEl.setAttribute("style", "display: block !important");
+  if(event.target.matches("button")){
+    beginButtonEl.setAttribute("style", "display: none !important");
+    firstMoleImgEl.setAttribute("style", "display: none !important");
+    timerDivEl.setAttribute("style", "display: block !important");
+    scoreDivEl.setAttribute("style", "display: block !important");
+    containerDivEl.setAttribute("style", "display: block !important");
 
-  timerInterval = setInterval(tickUp, 1000);
-  displayMoles();
+    timerInterval = setInterval(tickUp, 1000);
+    displayMoles();
+  }
 }
 
 function displayMoles() {
@@ -82,6 +84,7 @@ function setMole(indexVal) {
 
 
 function tickUp(){
+  console.log(`tick ${moleArrofObjIndex}`)
   time++;
   timerDivEl.children[0].textContent = "Timer: " + time;
 
@@ -125,15 +128,15 @@ function saveScoreAndMoveUser() {
   var name = saveInputEl.value.trim();
 
   if (name !== "") {
-    var localStorageHighScores = JSON.parse(window.localStorage.getItem("localStorageHighScores")) || [];
+    var localStorageHighScoresForMatches = JSON.parse(window.localStorage.getItem("localStorageHighScoresForMatches")) || [];
 
     var newEntry = {
       name: name,
       score: numberOfWhacks
     }
 
-    localStorageHighScores.push(newEntry);
-    window.localStorage.setItem("localStorageHighScores", JSON.stringify(localStorageHighScores))
+    localStorageHighScoresForMatches.push(newEntry);
+    window.localStorage.setItem("localStorageHighScoresForMatches", JSON.stringify(localStorageHighScoresForMatches))
 
     window.location.href = "highscores.html";
   }
