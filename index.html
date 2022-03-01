@@ -33,7 +33,7 @@
   <main class="flex-grow-1 d-flex flex-wrap justify-content-center">
     <img id="first-mole" class="align-self-center" alt="mole" src="./assets/img/goofy_mole.png">
     <div class="text-white timer d-none">
-      <h3>Timer: 0</h3>
+      <h3>Timer: <span id="ticking-time-span">0</span> / <span id="time-span">10</span></h3>
     </div>
     <div class="text-white score d-none">
       <h3>Score: 0</h3>
@@ -71,16 +71,42 @@
       </div>
     </div>
     <form id="save-form" class="d-none">
-      <label class="h3 m-4 text-white" for="name-input">Your Name Here</label>
-      <input id="name-input" type="text">
-      <button id="save-button" type="submit" class="btn btn-lg btn-primary m-4">Save</button>
+      <div class="form-group">
+        <label class="h3 text-light" for="name-input">Your Name Here</label>
+        <input 
+          id="name-input" 
+          type="text"
+          placeholder="Name"
+          class='form-control'
+        />
+      </div>
+      <button id="save-button" type="submit" class="btn btn-lg btn-primary">Save</button>
     </form>
   </main>
 
-  <div  id="begin-button" class="flex-grow-1 d-flex justify-content-center d-none">
-    <button type="button" class="btn btn-lg btn-primary btn-block align-self-center mx-4 py-4">
-      Begin!
-    </button>
+  <div  id="begin-div" class="flex-grow-1 d-flex justify-content-center d-none">
+    <form id="time-cap-form">
+      <div class="form-group">
+        <label
+          for="time-cap"
+          class="font-weight-bold h3 text-light"
+        >
+          Time Cap
+        </label>
+        <input autofocus placeholder="seconds" type="number" id="time-cap" class='form-control' />
+        <small
+          id="time-cap-small"
+          class="form-text text-light"
+        >
+          Input must be a number ranging from 10 to 100.
+        </small>
+      </div>
+      <button type="submit" class="btn btn-lg btn-primary">
+        Begin!
+      </button>
+      <div class="d-flex justify-content-center">
+      </div>
+    </form>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"

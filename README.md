@@ -1,6 +1,6 @@
 # Match-a-Mole
 
-![alt tag](./assets/img/screenshot.png)
+![alt tag](./assets/img/geeky_mole.jpg)
 
 3-5 sentence description that answers the following questions
 

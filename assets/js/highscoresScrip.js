@@ -1,18 +1,22 @@
-var highScoresOlEl = document.querySelector("#highscores-ol")
+var highScoresOlEl = document.querySelector("#highscores-ol");
 
 function displayHighScores() {
 
   var localStorageHighScoresForMatches = JSON.parse(window.localStorage.getItem("localStorageHighScoresForMatches")) || [];
 
-  // can add sort()
+  const sortedScores = localStorageHighScoresForMatches.sort(sortHighToLow);
 
-  for(var i = 0; i < localStorageHighScoresForMatches.length; i++) {
+  for(var i = 0; i < sortedScores.length; i++) {
     var liEl = document.createElement("li");
-    liEl.textContent = localStorageHighScoresForMatches[i].name + ": " + localStorageHighScoresForMatches[i].score + " Match(es)";
-    liEl.classList.add("custom-li-css");
+    liEl.textContent = sortedScores[i].name + ": " + sortedScores[i].score + " Matches";
+    liEl.classList.add("text-light", "h4");
     highScoresOlEl.appendChild(liEl);
   }
 
+};
+
+function sortHighToLow (storageObj1, storageObj2) {
+  return storageObj2.score - storageObj1.score;
 }
 
 displayHighScores();

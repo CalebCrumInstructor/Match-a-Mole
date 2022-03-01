@@ -1,74 +1,107 @@
-var beginButtonEl = document.querySelector("#begin-button");
+// Grab HTML Elements to Use Below
+var beginDivEl = document.querySelector("#begin-div");
+var timeCapFromEl = document.querySelector("#time-cap-form");
+var timeCapInputEl = document.querySelector("#time-cap");
+var timeCapLabelEl = document.querySelector("#time-cap-small");
 var firstMoleImgEl = document.querySelector("#first-mole");
+
 var timerDivEl = document.querySelector(".timer");
+var timeSpanEl = document.querySelector("#time-span");
+var tickingTimeSpanEl = document.querySelector("#ticking-time-span");
+
+var matchMeMoleDivEl = document.getElementById("match-me-mole");
+
 var scoreDivEl = document.querySelector(".score");
 var containerDivEl = document.querySelector(".container");
+
 var saveFormEl = document.querySelector("#save-form");
-var saveInputEl = document.querySelector("#name-input")
-var saveButtonEl = document.querySelector("#save-button")
+var saveInputEl = document.querySelector("#name-input");
+
 var main = document.querySelector("main");
 
+
+// Declare Global Variables
 var timerInterval;
 var time = 0;
-var timeCap = 15;
+var timeCap = 10;
 var numberOfWhacks = 0;
-var moleArrofObjIndex = 0;
+var moleArrOfObjIndex = 0;
 
-var moleArrofObj = [
-  {
-    moleArr: ["./assets/img/goofy_mole.png", "./assets/img/geeky_mole.jpg", "./assets/img/anime_mole.png", "./assets/img/worried_mole.png"],
-    matchMeMoleId: 0
-  },
+var moleArrOfObj = [
   {
     moleArr: ["./assets/img/goofy_mole.png", "./assets/img/geeky_mole.jpg", "./assets/img/anime_mole.png", "./assets/img/worried_mole.png"],
     matchMeMoleId: 1
   },
   {
-    moleArr: ["./assets/img/goofy_mole.png", "./assets/img/geeky_mole.jpg", "./assets/img/anime_mole.png", "./assets/img/worried_mole.png"],
+    moleArr: ["./assets/img/geeky_mole.jpg", "./assets/img/anime_mole.png", "./assets/img/worried_mole.png", "./assets/img/goofy_mole.png"],
+    matchMeMoleId: 1
+  },
+  {
+    moleArr: ["./assets/img/anime_mole.png", "./assets/img/worried_mole.png", "./assets/img/goofy_mole.png", "./assets/img/geeky_mole.jpg"],
     matchMeMoleId: 2
   },
   {
-    moleArr: ["./assets/img/goofy_mole.png", "./assets/img/geeky_mole.jpg", "./assets/img/anime_mole.png", "./assets/img/worried_mole.png"],
+    moleArr: ["./assets/img/worried_mole.png", "./assets/img/goofy_mole.png", "./assets/img/geeky_mole.jpg", "./assets/img/anime_mole.png"],
     matchMeMoleId: 3
   },
   {
     moleArr: ["./assets/img/goofy_mole.png", "./assets/img/geeky_mole.jpg", "./assets/img/anime_mole.png", "./assets/img/worried_mole.png"],
     matchMeMoleId: 1
+  },
+  {
+    moleArr: ["./assets/img/geeky_mole.jpg", "./assets/img/anime_mole.png", "./assets/img/worried_mole.png", "./assets/img/goofy_mole.png"],
+    matchMeMoleId: 1
+  },
+  {
+    moleArr: ["./assets/img/anime_mole.png", "./assets/img/worried_mole.png", "./assets/img/goofy_mole.png", "./assets/img/geeky_mole.jpg"],
+    matchMeMoleId: 1
   }
 ]
 
-// Begin
-beginButtonEl.addEventListener("click", begin)
 
-function begin(){
-  if(event.target.matches("button")){
-    beginButtonEl.setAttribute("style", "display: none !important");
-    firstMoleImgEl.setAttribute("style", "display: none !important");
-    timerDivEl.setAttribute("style", "display: block !important");
-    scoreDivEl.setAttribute("style", "display: block !important");
-    containerDivEl.setAttribute("style", "display: block !important");
+// Begin Game
+timeCapFromEl.addEventListener("submit", init);
 
-    timerInterval = setInterval(tickUp, 1000);
-    displayMoles();
-  }
+function init(event){
+  event.preventDefault();
+  const givenTimeCap = timeCapInputEl.value;
+
+  if (givenTimeCap < 10 || givenTimeCap > 100) {
+    timeCapInputEl.value = "";
+    timeCapLabelEl.setAttribute("style", "color: yellow !important");
+    return;
+  };
+
+  timeCap = givenTimeCap;
+  timeSpanEl.textContent = givenTimeCap;
+
+  beginDivEl.setAttribute("style", "display: none !important");
+  firstMoleImgEl.setAttribute("style", "display: none !important");
+  timerDivEl.setAttribute("style", "display: block !important");
+  scoreDivEl.setAttribute("style", "display: block !important");
+  containerDivEl.setAttribute("style", "display: block !important");
+
+  timerInterval = setInterval(tickUp, 1000);
+  displayMoles();
 }
 
+
+// Display Moles on Screen
 function displayMoles() {
-  if(moleArrofObjIndex !== 0){
-    document.getElementById("match-me-mole").children[1].remove();
+  if(moleArrOfObjIndex !== 0){
+    matchMeMoleDivEl.children[1].remove();
   }
 
-  var currrentMoleLayout = moleArrofObj[moleArrofObjIndex];
+  var currentMoleLayout = moleArrOfObj[moleArrOfObjIndex];
 
   var mainImg = document.createElement("img");
-  mainImg.classList.add("mole");
-  mainImg.classList.add("h-50");
+  mainImg.classList.add("mole", "h-50");
   mainImg.setAttribute("alt", "mole");
-  mainImg.setAttribute("src", currrentMoleLayout.moleArr[currrentMoleLayout.matchMeMoleId])
+  mainImg.setAttribute("src", currentMoleLayout.moleArr[currentMoleLayout.matchMeMoleId])
 
-  document.getElementById("match-me-mole").appendChild(mainImg);
+  matchMeMoleDivEl.appendChild(mainImg);
 
-  for(var i = 0; i < currrentMoleLayout.moleArr.length; i++){
+  for(var i = 0; i < currentMoleLayout.moleArr.length; i++){
     setMole(i)
   }
 
@@ -76,20 +109,26 @@ function displayMoles() {
 
 function setMole(indexVal) {
   var newMoleImg = document.createElement("img");
-  newMoleImg.classList.add("mole");
-  newMoleImg.classList.add("h-50");
+  newMoleImg.classList.add("mole", "h-50");
   newMoleImg.setAttribute("alt", "mole");
-  newMoleImg.setAttribute("src", moleArrofObj[moleArrofObjIndex].moleArr[indexVal])
+  newMoleImg.setAttribute("src", moleArrOfObj[moleArrOfObjIndex].moleArr[indexVal])
 
-  newMoleImg.addEventListener("click", countMatch)
+  newMoleImg.addEventListener("click", countMatch);
+
+  var previousImgEl = document.getElementById(indexVal).children[1];
+
+  if (previousImgEl) {
+    previousImgEl.remove()
+  }
 
   document.getElementById(indexVal).appendChild(newMoleImg);
 }
 
 
+// Timer
 function tickUp(){
   time++;
-  timerDivEl.children[0].textContent = "Timer: " + time;
+  tickingTimeSpanEl.textContent = time;
 
   if (time >= timeCap) {
     end();
@@ -97,23 +136,28 @@ function tickUp(){
 }
 
 
-function countMatch() {
+// Evaluate Clicked on Mole
+function countMatch(event) {
   event.stopPropagation();
-  if(parseInt(event.target.parentElement.id) === moleArrofObj[moleArrofObjIndex].matchMeMoleId) {
+
+  if(parseInt(event.target.parentElement.id) === moleArrOfObj[moleArrOfObjIndex].matchMeMoleId) {
     numberOfWhacks++
     scoreDivEl.children[0].textContent = "Score: " + numberOfWhacks;
   }
 
-  moleArrofObjIndex++
-  if(moleArrofObjIndex === moleArrofObj.length){
+  moleArrOfObjIndex++
+  if(moleArrOfObjIndex === moleArrOfObj.length){
     return end()
   }
+
   displayMoles()
 }
 
 
+// End Game
 function end() {
-  clearInterval(timerInterval)
+  clearInterval(timerInterval);
+
   timerDivEl.setAttribute("style", "display: none !important");
   scoreDivEl.setAttribute("style", "display: none !important");
   containerDivEl.setAttribute("style", "display: none !important");
@@ -122,10 +166,10 @@ function end() {
 }
 
 
-saveButtonEl.addEventListener("click", saveScoreAndMoveUser);
+saveFormEl.addEventListener("submit", saveScoreAndMoveUser);
 
 
-function saveScoreAndMoveUser() {
+function saveScoreAndMoveUser(event) {
   event.preventDefault();
   
   var name = saveInputEl.value.trim();
@@ -140,6 +184,7 @@ function saveScoreAndMoveUser() {
     }
 
     localStorageHighScoresForMatches.push(newEntry);
+    
     window.localStorage
       .setItem("localStorageHighScoresForMatches", JSON.stringify(localStorageHighScoresForMatches))
 
