@@ -4,6 +4,8 @@
 
 In this activity you will build a matching game that has a timer, keeps track of a user's score, and allows a user to save their score.  HTML, JavaScript (JS), and Bootstrap will be need to complete this project. This activity will review basic HTML forms, DOM manipulation with JS, and localstorage.   
 
+[Live Link](https://ccrum292.github.io/Match-a-Mole/)
+
 ## Instructions
 
 * This activity will be broken into three 30 minute intervals.
@@ -16,4 +18,3 @@ In this activity you will build a matching game that has a timer, keeps track of
     * Return to Main Room to Review (10 min)
   * Step 3 (20 min): Within the same file, add an event listener to the save form and work on the saveScoreAndMoveUser function.  Next, move to highScoresScript.js and complete the work there.
     * Return to Main Room to Review (10 min)
-
