@@ -1,6 +1,6 @@
 # Match-a-Mole
 
-![alt tag](./docs/assets/img/geeky_mole.jpg)
+![alt tag](https://calebcruminstructor.github.io/Match-a-Mole//assets/img/geeky_mole.jpg)
 
 In this activity you will build a matching game that has a timer, keeps track of a user's score, and allows a user to save their score. HTML, JavaScript (JS), and Bootstrap will be need to complete this project. This activity will review basic HTML forms, DOM manipulation with JS, and localstorage.
 
